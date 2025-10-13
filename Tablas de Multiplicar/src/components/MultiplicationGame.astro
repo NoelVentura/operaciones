@@ -1,0 +1,102 @@
+---
+---
+
+<div class="game-container p-8 rounded-2xl shadow-lg w-[500px] text-white">
+    <h1 class="text-3xl font-bold text-pink-600 mb-4">BIENVENIDO NOELITO</h1>
+    <p class="text-lg">Practica las tablas de multiplicar</p>
+    <div id="game" class="mt-4">
+        <p id="question" class="text-2xl font-bold text-purple-700"></p>
+        <input id="answer" type="number" class="mt-2 p-2 border rounded w-full text-center text-black" placeholder="Escribe tu respuesta">
+        <button id="verify-btn" class="button mt-3 bg-green-400 text-white px-4 py-2 rounded-lg">Verificar</button>
+        <p id="feedback" class="mt-2 text-lg font-bold"></p>
+    </div>
+    <div class="mt-4">
+        <p class="text-lg">Aciertos: <span id="score" class="text-green-700 font-bold">0</span></p>
+        <p class="text-lg">Errores: <span id="errors" class="text-red-700 font-bold">0</span></p>
+    </div>
+    <button id="restart-btn" class="button mt-3 bg-red-400 text-white px-4 py-2 rounded-lg">Reiniciar</button>
+</div>
+
+<script>
+    let num1: number, num2: number, correctAnswer: number;
+    let score = 0;
+    let errors = 0;
+
+    function generateQuestion() {
+        num1 = Math.floor(Math.random() * 9) + 1;
+        num2 = Math.floor(Math.random() * 9) + 1;
+        correctAnswer = num1 * num2;
+        const questionEl = document.getElementById('question');
+        const answerEl = document.getElementById('answer') as HTMLInputElement;
+        const feedbackEl = document.getElementById('feedback');
+        
+        if (questionEl) questionEl.textContent = `${num1} × ${num2} = ?`;
+        if (answerEl) answerEl.value = '';
+        if (feedbackEl) feedbackEl.textContent = '';
+    }
+
+    function checkAnswer() {
+        const answerEl = document.getElementById('answer') as HTMLInputElement;
+        const feedbackEl = document.getElementById('feedback');
+        const scoreEl = document.getElementById('score');
+        const errorsEl = document.getElementById('errors');
+        
+        let userAnswer = parseInt(answerEl.value);
+
+        if (userAnswer === correctAnswer) {
+            if (feedbackEl) {
+                feedbackEl.textContent = "¡Bien hecho! 🎉";
+                feedbackEl.className = "mt-2 text-lg font-bold text-green-700";
+            }
+            score++;
+        } else {
+            if (feedbackEl) {
+                feedbackEl.textContent = "¡Intenta de nuevo! ❌";
+                feedbackEl.className = "mt-2 text-lg font-bold text-red-700";
+            }
+            errors++;
+        }
+
+        if (scoreEl) scoreEl.textContent = score.toString();
+        if (errorsEl) errorsEl.textContent = errors.toString();
+        setTimeout(generateQuestion, 1000);
+    }
+
+    function restartGame() {
+        score = 0;
+        errors = 0;
+        const scoreEl = document.getElementById('score');
+        const errorsEl = document.getElementById('errors');
+        
+        if (scoreEl) scoreEl.textContent = score.toString();
+        if (errorsEl) errorsEl.textContent = errors.toString();
+        generateQuestion();
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', () => {
+        const verifyBtn = document.getElementById('verify-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const answerInput = document.getElementById('answer') as HTMLInputElement;
+        
+        if (verifyBtn) {
+            verifyBtn.addEventListener('click', checkAnswer);
+        }
+        
+        if (restartBtn) {
+            restartBtn.addEventListener('click', restartGame);
+        }
+        
+        // Allow pressing Enter to verify answer
+        if (answerInput) {
+            answerInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    checkAnswer();
+                }
+            });
+        }
+        
+        generateQuestion();
+    });
+</script>
+

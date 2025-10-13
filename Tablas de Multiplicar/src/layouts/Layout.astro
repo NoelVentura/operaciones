@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>BIENVENIDO NOELITO</title>
+		<script src="https://cdn.tailwindcss.com"></script>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+
+<style is:global>
+	body {
+		animation: fadeIn 1s ease-in;
+		background-color: #7e22ce;
+		background-image: url('/imagenes/FONDO.jpg');
+		background-size: 40%;
+		background-position: left center;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		min-height: 100vh;
+	}
+	@keyframes fadeIn {
+		from { opacity: 0; }
+		to { opacity: 1; }
+	}
+	.game-container {
+		background: linear-gradient(135deg, rgba(255, 211, 181, 0.95), rgba(255, 170, 165, 0.95), rgba(213, 170, 255, 0.95), rgba(163, 216, 244, 0.95));
+		animation: bounceIn 1s ease-in-out, glow 2s ease-in-out infinite alternate, float 3s ease-in-out infinite;
+		box-shadow: 
+			0 0 20px rgba(255, 255, 255, 0.8),
+			0 0 40px rgba(255, 255, 255, 0.6),
+			0 0 60px rgba(255, 255, 255, 0.4),
+			inset 0 0 20px rgba(255, 255, 255, 0.3);
+		border: 2px solid rgba(255, 255, 255, 0.8);
+		backdrop-filter: blur(10px);
+		transform-style: preserve-3d;
+	}
+	
+	@keyframes glow {
+		from {
+			box-shadow: 
+				0 0 20px rgba(255, 255, 255, 0.8),
+				0 0 40px rgba(255, 255, 255, 0.6),
+				0 0 60px rgba(255, 255, 255, 0.4),
+				inset 0 0 20px rgba(255, 255, 255, 0.3);
+		}
+		to {
+			box-shadow: 
+				0 0 30px rgba(255, 255, 255, 1),
+				0 0 60px rgba(255, 255, 255, 0.8),
+				0 0 90px rgba(255, 255, 255, 0.6),
+				inset 0 0 30px rgba(255, 255, 255, 0.5);
+		}
+	}
+	
+	@keyframes float {
+		0%, 100% {
+			transform: translateY(0px) rotateX(0deg);
+		}
+		50% {
+			transform: translateY(-10px) rotateX(2deg);
+		}
+	}
+	@keyframes bounceIn {
+		0% { transform: scale(0.9); opacity: 0; }
+		50% { transform: scale(1.05); opacity: 1; }
+		100% { transform: scale(1); }
+	}
+	.button {
+		transition: transform 0.2s;
+	}
+	.button:hover {
+		transform: scale(1.1);
+	}
+</style>
