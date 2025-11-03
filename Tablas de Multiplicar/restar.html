@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BIENVENIDO NOELITO</title>
+    <title>RESTAR NOELITO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             animation: fadeIn 1s ease-in;
-            background-image: url('./public/imagenes/fondomultiplicar.jpg');
+            background-color: #7e22ce;
+            background-image: url('./public/imagenes/fondorestar.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -21,11 +22,11 @@
         }
         header {
             background: rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(10px);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
         }
         .game-container {
-            background: rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, rgba(147, 197, 253, 0.95), rgba(96, 165, 250, 0.95), rgba(59, 130, 246, 0.95), rgba(37, 99, 235, 0.95));
             animation: bounceIn 1s ease-in-out, glow 2s ease-in-out infinite alternate, float 3s ease-in-out infinite;
             box-shadow: 
                 0 0 20px rgba(255, 255, 255, 0.8),
@@ -81,12 +82,12 @@
         <div class="max-w-6xl mx-auto flex justify-between items-center">
             <h1 class="text-3xl font-bold text-white">🎓 ¡Practica tus habilidades matemáticas!</h1>
             <div class="flex gap-4 items-center">
-            <nav class="flex gap-4">
+                <nav class="flex gap-4">
                     <a href="tablas-multiplicar.html" target="_blank" class="text-white hover:text-yellow-300 transition-colors font-semibold">Multiplicar</a>
                     <a href="dividir.html" target="_blank" class="text-white hover:text-yellow-300 transition-colors font-semibold">Dividir</a>
                     <a href="sumar.html" target="_blank" class="text-white hover:text-yellow-300 transition-colors font-semibold">Sumar</a>
                     <a href="restar.html" target="_blank" class="text-white hover:text-yellow-300 transition-colors font-semibold">Restar</a>
-            </nav>
+                </nav>
                 <button onclick="goToHome()" class="button bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
                     Regreso a Página de Inicio
                 </button>
@@ -96,13 +97,13 @@
 
     <!-- Contenido Principal -->
     <main class="flex-1 flex flex-col items-end justify-center text-center px-4" style="padding-left: 40%; padding-right: 10%;">
-        
         <div class="game-container p-8 rounded-2xl shadow-lg w-[500px] text-white">
-            <h1 id="welcomeTitle" class="text-3xl font-bold text-pink-600 mb-4">BIENVENIDO</h1>
+            <h1 class="text-3xl font-bold text-pink-600 mb-4" id="bienvenidoTitulo">BIENVENIDO</h1>
             
-            <p class="text-lg">Practica las tablas de multiplicar</p>
+            
+            <p class="text-lg">Practica la resta</p>
             <div id="game" class="mt-4">
-                <p id="question" class="text-4xl font-bold text-blue-900" style="text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.4);"></p>
+                <p id="question" class="text-4xl font-bold text-blue-700" style="text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.4); -webkit-text-stroke: 1px white; text-stroke: 1px white;"></p>
                 <input id="answer" type="number" class="mt-2 p-2 border rounded w-full text-center text-black" placeholder="Escribe tu respuesta">
                 <button onclick="checkAnswer()" class="button mt-3 bg-green-400 text-white px-4 py-2 rounded-lg">Verificar</button>
                 <p id="feedback" class="mt-2 text-lg font-bold"></p>
@@ -119,13 +120,14 @@
         let num1, num2, correctAnswer;
         let score = 0;
         let errors = 0;
-        let studentName = '';
 
         function generateQuestion() {
-            num1 = Math.floor(Math.random() * 9) + 1;
-            num2 = Math.floor(Math.random() * 9) + 1;
-            correctAnswer = num1 * num2;
-            document.getElementById('question').textContent = `${num1} × ${num2} = ?`;
+            // Generar números para resta (asegurar resultado positivo)
+            num1 = Math.floor(Math.random() * 99) + 1; // minuendo (1-99)
+            num2 = Math.floor(Math.random() * num1) + 1; // sustraendo (1 hasta num1)
+            correctAnswer = num1 - num2;
+            
+            document.getElementById('question').textContent = `${num1} - ${num2} = ?`;
             document.getElementById('answer').value = '';
             document.getElementById('feedback').textContent = '';
         }
@@ -163,7 +165,7 @@
         }
 
         // Obtener el nombre del alumno de la URL o localStorage
-        function loadStudentNameFromURL() {
+        function obtenerNombreAlumno() {
             const urlParams = new URLSearchParams(window.location.search);
             let nombre = urlParams.get('nombre');
             
@@ -175,11 +177,9 @@
             if (nombre) {
                 // Guardar en localStorage para futuras navegaciones
                 localStorage.setItem('nombreAlumno', nombre);
-                document.getElementById('welcomeTitle').textContent = `BIENVENIDO ${nombre.toUpperCase()}`;
+                document.getElementById('bienvenidoTitulo').textContent = `BIENVENIDO ${nombre.toUpperCase()}`;
                 // Actualizar enlaces del menú
                 actualizarEnlacesConNombre(nombre);
-            } else {
-                document.getElementById('welcomeTitle').textContent = 'BIENVENIDO';
             }
         }
 
@@ -199,18 +199,17 @@
 
         // Permitir presionar Enter para verificar
         document.addEventListener('DOMContentLoaded', function() {
+            // Obtener y mostrar el nombre del alumno
+            obtenerNombreAlumno();
+            
             document.getElementById('answer').addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     checkAnswer();
                 }
             });
             
-            // Cargar nombre desde URL si existe
-            loadStudentNameFromURL();
-            
             generateQuestion();
         });
     </script>
 </body>
 </html>
-
