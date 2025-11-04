@@ -1,46 +1,86 @@
-# Astro Starter Kit: Basics
+# 🧮 Operaciones Matematicas
 
-```sh
-npm create astro@latest -- --template basics
+Una aplicación web educativa e interactiva para que los niños aprendan y practiquen operaciones matemáticas básicas de manera divertida.
+
+## 📚 Descripción
+
+**Operaciones Matematicas** es una plataforma educativa diseñada para ayudar a los estudiantes a dominar las operaciones matemáticas fundamentales:
+
+- ✖️ **Multiplicar** - Practica las tablas de multiplicar
+- ➗ **Dividir** - Aprende divisiones de forma interactiva
+- ➕ **Sumar** - Mejora tus habilidades de suma
+- ➖ **Restar** - Domina las restas con ejercicios dinámicos
+
+## ✨ Características
+
+- 🎨 Interfaz visual atractiva y animada
+- 🎯 Ejercicios interactivos y dinámicos
+- 📝 Persistencia del nombre del alumno usando localStorage
+- 🎭 Animaciones y efectos visuales para una experiencia inmersiva
+- 📱 Diseño responsive que se adapta a diferentes dispositivos
+- 🎓 Fácil de usar para niños de todas las edades
+
+## 🚀 Tecnologías Utilizadas
+
+- **HTML5** - Estructura de la aplicación
+- **CSS3** - Estilos y animaciones
+- **JavaScript** - Funcionalidad interactiva
+- **Tailwind CSS** - Framework de estilos utilitarios
+- **Astro** - Framework para desarrollo web
+
+## 📁 Estructura del Proyecto
+
 ```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
+Tablas de Multiplicar/
+├── pagina-inicio.html      # Página de bienvenida
+├── tablas-multiplicar.html  # Página de multiplicación
+├── dividir.html            # Página de división
+├── sumar.html              # Página de suma
+├── restar.html             # Página de resta
 ├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+│   └── imagenes/          # Imágenes y recursos visuales
+└── README.md              # Este archivo
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+## 🎮 Cómo Usar
 
-## 🧞 Commands
+1. Abre `pagina-inicio.html` en tu navegador
+2. Ingresa tu nombre en el campo de texto
+3. Haz clic en "¡Comenzar a Aprender!"
+4. Selecciona la operación matemática que deseas practicar
+5. ¡Disfruta aprendiendo!
 
-All commands are run from the root of the project, from a terminal:
+## 🛠️ Instalación y Desarrollo
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+### Requisitos Previos
 
-## 👀 Want to learn more?
+- Node.js (versión 16 o superior)
+- npm o yarn
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+### Pasos de Instalación
+
+```bash
+# Instalar dependencias
+npm install
+
+# Ejecutar servidor de desarrollo
+npm run dev
+
+# Construir para producción
+npm run build
+
+# Vista previa de la construcción
+npm run preview
+```
+
+## 📝 Licencia
+
+Este proyecto es de uso educativo y está disponible para fines de aprendizaje.
+
+## 👨‍💻 Autor
+
+Desarrollado con ❤️ para ayudar a los niños a aprender matemáticas de manera divertida.
+
+---
+
+¡Diviertete aprendiendo matemáticas! 🎉
