@@ -42,9 +42,24 @@ Tablas de Multiplicar/
 └── README.md              # Este archivo
 ```
 
+## 🌐 Publicar en GitHub Pages
+
+Para publicar esta aplicación en GitHub Pages:
+
+1. **Crear un repositorio en GitHub** con el nombre que prefieras
+2. **Subir todos los archivos** de la carpeta `Tablas de Multiplicar` a la raíz del repositorio
+3. **Configurar GitHub Pages**:
+   - Ve a Settings → Pages en tu repositorio
+   - En "Source", selecciona la rama principal (main o master)
+   - En "Folder", selecciona `/ (root)`
+   - Guarda los cambios
+4. **Acceder a tu sitio**: Tu sitio estará disponible en `https://[tu-usuario].github.io/[nombre-repositorio]/`
+
+**Nota**: Asegúrate de que la carpeta `public` con todas las imágenes esté incluida en el repositorio.
+
 ## 🎮 Cómo Usar
 
-1. Abre `pagina-inicio.html` en tu navegador
+1. Abre `pagina-inicio.html` en tu navegador (o visita la URL de GitHub Pages)
 2. Ingresa tu nombre en el campo de texto
 3. Haz clic en "¡Comenzar a Aprender!"
 4. Selecciona la operación matemática que deseas practicar
