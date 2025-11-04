@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIENVENIDO NOELITO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            animation: fadeIn 1s ease-in;
+            background-image: url('./public/imagenes/fondomultiplicar.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        header {
+            background: rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .game-container {
+            background: rgba(0, 0, 0, 0.2);
+            animation: bounceIn 1s ease-in-out, glow 2s ease-in-out infinite alternate, float 3s ease-in-out infinite;
+            box-shadow: 
+                0 0 20px rgba(255, 255, 255, 0.8),
+                0 0 40px rgba(255, 255, 255, 0.6),
+                0 0 60px rgba(255, 255, 255, 0.4),
+                inset 0 0 20px rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 
+                    0 0 20px rgba(255, 255, 255, 0.8),
+                    0 0 40px rgba(255, 255, 255, 0.6),
+                    0 0 60px rgba(255, 255, 255, 0.4),
+                    inset 0 0 20px rgba(255, 255, 255, 0.3);
+            }
+            to {
+                box-shadow: 
+                    0 0 30px rgba(255, 255, 255, 1),
+                    0 0 60px rgba(255, 255, 255, 0.8),
+                    0 0 90px rgba(255, 255, 255, 0.6),
+                    inset 0 0 30px rgba(255, 255, 255, 0.5);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotateX(0deg);
+            }
+            50% {
+                transform: translateY(-10px) rotateX(2deg);
+            }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.9); opacity: 0; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        .button {
+            transition: transform 0.2s;
+        }
+        .button:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="w-full py-6 px-4">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-white">🎓 ¡Practica tus habilidades matemáticas!</h1>
+            <div class="flex gap-4 items-center">
+            <nav class="flex gap-4">
+                    <a href="tablas-multiplicar.html" target="_blank" class="text-white hover:text-yellow-300 transition-colors font-semibold">Multiplicar</a>
+                    <a href="dividir.html" target="_blank" class="text-white hover:text-yellow-300 transition-colors font-semibold">Dividir</a>
+                    <a href="sumar.html" target="_blank" class="text-white hover:text-yellow-300 transition-colors font-semibold">Sumar</a>
+                    <a href="restar.html" target="_blank" class="text-white hover:text-yellow-300 transition-colors font-semibold">Restar</a>
+            </nav>
+                <button onclick="goToHome()" class="button bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                    Regreso a Página de Inicio
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="flex-1 flex flex-col items-end justify-center text-center px-4" style="padding-left: 40%; padding-right: 10%;">
+        
+        <div class="game-container p-8 rounded-2xl shadow-lg w-[500px] text-white">
+            <h1 id="welcomeTitle" class="text-3xl font-bold text-pink-600 mb-4">BIENVENIDO</h1>
+            
+            <p class="text-lg">Practica las tablas de multiplicar</p>
+            <div id="game" class="mt-4">
+                <p id="question" class="text-4xl font-bold text-blue-900" style="text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.4);"></p>
+                <input id="answer" type="number" class="mt-2 p-2 border rounded w-full text-center text-black" placeholder="Escribe tu respuesta">
+                <button onclick="checkAnswer()" class="button mt-3 bg-green-400 text-white px-4 py-2 rounded-lg">Verificar</button>
+                <p id="feedback" class="mt-2 text-lg font-bold"></p>
+            </div>
+            <div class="mt-4">
+                <p class="text-lg">Aciertos: <span id="score" class="text-green-700 font-bold">0</span></p>
+                <p class="text-lg">Errores: <span id="errors" class="text-red-700 font-bold">0</span></p>
+            </div>
+            <button onclick="restartGame()" class="button mt-3 bg-red-400 text-white px-4 py-2 rounded-lg">Reiniciar</button>
+        </div>
+    </main>
+
+    <script>
+        let num1, num2, correctAnswer;
+        let score = 0;
+        let errors = 0;
+        let studentName = '';
+
+        function generateQuestion() {
+            num1 = Math.floor(Math.random() * 9) + 1;
+            num2 = Math.floor(Math.random() * 9) + 1;
+            correctAnswer = num1 * num2;
+            document.getElementById('question').textContent = `${num1} × ${num2} = ?`;
+            document.getElementById('answer').value = '';
+            document.getElementById('feedback').textContent = '';
+        }
+
+        function checkAnswer() {
+            let userAnswer = parseInt(document.getElementById('answer').value);
+            let feedback = document.getElementById('feedback');
+
+            if (userAnswer === correctAnswer) {
+                feedback.textContent = "¡Bien hecho! 🎉";
+                feedback.className = "mt-2 text-lg font-bold text-green-700";
+                score++;
+            } else {
+                feedback.textContent = "¡Intenta de nuevo! ❌";
+                feedback.className = "mt-2 text-lg font-bold text-red-700";
+                errors++;
+            }
+
+            document.getElementById('score').textContent = score;
+            document.getElementById('errors').textContent = errors;
+            setTimeout(generateQuestion, 1000);
+        }
+
+        function restartGame() {
+            score = 0;
+            errors = 0;
+            document.getElementById('score').textContent = score;
+            document.getElementById('errors').textContent = errors;
+            generateQuestion();
+        }
+
+        // Función para ir a la página de inicio
+        function goToHome() {
+            window.location.href = 'pagina-inicio.html';
+        }
+
+        // Obtener el nombre del alumno de la URL o localStorage
+        function loadStudentNameFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            let nombre = urlParams.get('nombre');
+            
+            // Si no está en la URL, buscar en localStorage
+            if (!nombre) {
+                nombre = localStorage.getItem('nombreAlumno');
+            }
+            
+            if (nombre) {
+                // Guardar en localStorage para futuras navegaciones
+                localStorage.setItem('nombreAlumno', nombre);
+                document.getElementById('welcomeTitle').textContent = `BIENVENIDO ${nombre.toUpperCase()}`;
+                // Actualizar enlaces del menú
+                actualizarEnlacesConNombre(nombre);
+            } else {
+                document.getElementById('welcomeTitle').textContent = 'BIENVENIDO';
+            }
+        }
+
+        // Función para actualizar los enlaces del menú con el nombre
+        function actualizarEnlacesConNombre(nombre) {
+            const enlaces = document.querySelectorAll('nav a');
+            enlaces.forEach(enlace => {
+                const href = enlace.getAttribute('href');
+                if (href && !href.includes('nombre=')) {
+                    const nuevoHref = href.includes('?') 
+                        ? `${href}&nombre=${encodeURIComponent(nombre)}`
+                        : `${href}?nombre=${encodeURIComponent(nombre)}`;
+                    enlace.setAttribute('href', nuevoHref);
+                }
+            });
+        }
+
+        // Permitir presionar Enter para verificar
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('answer').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkAnswer();
+                }
+            });
+            
+            // Cargar nombre desde URL si existe
+            loadStudentNameFromURL();
+            
+            generateQuestion();
+        });
+    </script>
+</body>
+</html>
+
